@@ -1,0 +1,19 @@
+all: server client
+
+server: Server/SockFunctions.o Server/Server.o
+	g++ -o Server/Server Server/Server.o Server/SockFunctions.o -pthread
+
+client: Client/Client.o
+	g++ -o Client/Client Client/Client.o -pthread
+
+Client/Client.o: Client/Client.cpp Client/Client.h
+	g++ -c Client/Client.cpp -o Client/Client.o -pthread
+
+Server/SockFunctions.o: Server/SockFunctions.cpp Server/SockFunctions.h Server/SockFunctions.h
+	g++ -c Server/SockFunctions.cpp -o Server/SockFunctions.o -pthread
+
+Server/Server.o: Server/Server.cpp Server/Server.h Server/SockFunctions.h
+	g++ -c Server/Server.cpp -o Server/Server.o -pthread
+
+clean:
+	rm -f Client/Client Server/Server Client/*.o Server/*.o
